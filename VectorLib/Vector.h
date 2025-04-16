@@ -7,6 +7,7 @@ class TVector
 protected:
   T* vector;
   int len;
+  bool isNew;
 public:
   TVector();
   TVector(int len_);
@@ -29,8 +30,8 @@ public:
   TVector& operator=(const TVector<T>& obj);
   TVector& operator=(TVector<T>&& obj);
   bool operator==(const TVector<T>& obj);
-  
-  T& operator[](int index);
+
+  T& operator[](int index) const;
 
   template <class O>
   friend std::ostream& operator<<(std::ostream& o, TVector<O>& v);
@@ -52,6 +53,7 @@ template<class T>
 inline TVector<T>::TVector()
 {
   vector = nullptr;
+  isNew = true;
   len = 0;
 }
 
@@ -64,11 +66,13 @@ inline TVector<T>::TVector(int len_)
   {
     len = 0;
     vector = nullptr;
+    return;
   }
   else
     len = len_;
 
   vector = new T[len]{ 0 };
+  isNew = true;
 
 }
 
@@ -78,6 +82,7 @@ inline TVector<T>::TVector(const TVector& obj) :
 {
   for (int i = 0; i < len; i++)
     vector[i] = obj.vector[i];
+  isNew = true;
 }
 
 template<class T>
@@ -85,16 +90,20 @@ inline TVector<T>::TVector(TVector&& obj)
 {
   vector = obj.vector;
   len = obj.len;
+  isNew = obj.isNew;
 
   obj.len = 0;
   obj.vector = nullptr;
+  obj.isNew = false;
+
 }
 
 template<class T>
 inline TVector<T>::~TVector()
 {
   if (vector != nullptr)
-    delete[] vector;
+    if (isNew == true)
+      delete[] vector;
   vector = nullptr;
   len = 0;
 }
@@ -144,10 +153,12 @@ inline void TVector<T>::SetVector(T* vector_, int len_)
   if (len_ < 0)
     throw - 1;
   if (vector != nullptr)
-      delete[] vector;
-    vector = vector_;
-    len = len_;
-    
+    delete[] vector;
+
+  isNew = false;
+  vector = vector_;
+  len = len_;
+
 }
 
 
@@ -161,8 +172,10 @@ inline TVector<T> TVector<T>::operator+
 
   TVector<T> res = len;
   for (int i = 0; i < len; i++)
+  {
     res[i] = (*this)[i] + obj[i];
-    //res.vector[i] = vector[i] + obj.vector[i];
+  }
+  //res.vector[i] = vector[i] + obj.vector[i];
 
   return res;
 }
@@ -255,7 +268,7 @@ inline bool TVector<T>::operator==(const TVector<T>& obj)
 }
 
 template<class T>
-inline T& TVector<T>::operator[](int index)
+inline T& TVector<T>::operator[](int index) const
 {
   if (vector == nullptr)
     throw - 1;
@@ -314,7 +327,7 @@ template<class O>
 inline std::ostream& operator<<(std::ostream& o, TVector<O>& v)
 {
   for (int i = 0; i < v.GetLen(); i++)
-    o << v[i];
+    o << v[i] << "\t";
   return o;
 }
 

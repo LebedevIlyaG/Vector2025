@@ -208,7 +208,7 @@ inline TVector<T> TVector<T>::operator/(const T div)
 {
   TVector<T> res = len;
   for (int i = 0; i < len; i++)
-    res[i] /= mul;
+    res[i] /= div;
 
   return res;
 }

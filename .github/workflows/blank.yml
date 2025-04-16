@@ -39,4 +39,4 @@ jobs:
           cmake ..
           make
           echo make complete
-          ./VectorLibTest/VectorLibTest
+          ./test/VectorLibTest

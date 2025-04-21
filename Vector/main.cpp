@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Vector.h"
 
+#include <vector>
+
 int main()
 {
   TVector<int> A, B;
@@ -23,6 +25,18 @@ int main()
   delete[] mas;
 
 
+
+  std::vector<int> vect1 = { 1, 2, 3, 4 };
+
+  //for (auto j = vect1.begin(); j != vect1.end(); j++)
+  //for (auto j : vect1)
+  //  std::cout << j << std::endl;
+
+
+  //for (auto k = D.begin(); k != D.end(); k++)
+  //for (TVectorIterator<int>& k = D.begin(); k != D.end(); k++)
+  for (auto k : D)
+    std::cout << k << std::endl;
 
   return 0;
 }

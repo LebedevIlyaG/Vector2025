@@ -2,6 +2,9 @@
 #include <iostream>
 
 template <class T>
+class TVectorIterator;
+
+template <class T>
 class TVector
 {
 protected:
@@ -47,6 +50,25 @@ public:
   T SecondNorm(T obj);
   T InfinityNorm(T obj);
   T HelderNorm(T obj);
+
+  TVectorIterator<T> begin();
+  TVectorIterator<T> end();
+};
+
+
+template<class T>
+class TVectorIterator
+{
+protected:
+  TVector<T>& p;
+  int index;
+public:
+  TVectorIterator(TVector<T>& vector, int index_ = 0);
+  T& operator*();
+  TVectorIterator<T>& operator++();
+  TVectorIterator<T>& operator++(int);
+
+  bool operator != (const TVectorIterator<T>& p);
 };
 
 template<class T>
@@ -323,6 +345,18 @@ inline T TVector<T>::HelderNorm(T obj)
   return T();
 }
 
+template<class T>
+inline TVectorIterator<T> TVector<T>::begin()
+{
+  return TVectorIterator<T>(*this, 0);
+}
+
+template<class T>
+inline TVectorIterator<T> TVector<T>::end()
+{
+  return TVectorIterator<T>(*this, len);
+}
+
 template<class O>
 inline std::ostream& operator<<(std::ostream& o, TVector<O>& v)
 {
@@ -335,4 +369,36 @@ template<class I>
 inline std::istream& operator>>(std::istream& i, TVector<I>& v)
 {
   return i;
+}
+
+template<class T>
+inline TVectorIterator<T>::TVectorIterator(TVector<T>& vector, int index_):
+  p(vector), index(index_)
+{
+}
+
+template<class T>
+inline T& TVectorIterator<T>::operator*()
+{
+  return p[index];
+}
+
+template<class T>
+inline TVectorIterator<T>& TVectorIterator<T>::operator++()
+{
+  index++;
+  return *this;
+}
+
+template<class T>
+inline TVectorIterator<T>& TVectorIterator<T>::operator++(int)
+{
+  index++;
+  return* this;
+}
+
+template<class T>
+inline bool TVectorIterator<T>::operator!=(const TVectorIterator<T>& p)
+{
+  return index != p.index;
 }

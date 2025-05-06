@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <new>
 
 template <class T>
 class TVectorIterator;
@@ -18,41 +19,43 @@ public:
   TVector(TVector&& obj);
   ~TVector();
 
-  int GetLen();
-  void GetVector(T** vector_);
+  virtual int GetLen();
+  virtual void GetVector(T** vector_);
 
-  void SetLen(int len_);
-  void SetVector(T* vector_, int len_);
+  virtual void SetLen(int len_);
+  virtual void SetVector(T* vector_, int len_);
 
-  TVector operator+(const TVector<T>& obj);
-  TVector operator-(const TVector<T>& obj);
-  T operator*(const TVector<T>& obj);
-  TVector operator*(const T mul);
-  TVector operator/(const T div);
+  virtual TVector operator+(const TVector<T>& obj);
+  virtual TVector operator-(const TVector<T>& obj);
+  virtual T operator*(const TVector<T>& obj);
+  virtual TVector operator*(const T& mul);
+  //virtual TVector operator/(const T& div);
 
-  TVector& operator=(const TVector<T>& obj);
-  TVector& operator=(TVector<T>&& obj);
-  bool operator==(const TVector<T>& obj);
+  virtual TVector& operator=(const TVector<T>& obj);
+  virtual TVector& operator=(TVector<T>&& obj);
+  virtual bool operator==(const TVector<T>& obj);
 
-  T& operator[](int index) const;
+  virtual T& operator[](int index) const;
 
   template <class O>
   friend std::ostream& operator<<(std::ostream& o, TVector<O>& v);
   template <class I>
   friend std::istream& operator>>(std::istream& i, TVector<I>& v);
 
-  void SortBable(T* obj);
-  void SortQuick(T* obj);
-  void SortInsertion(T* obj);
+  virtual void SortBable(T* obj);
+  virtual void SortQuick(T* obj);
+  virtual void SortInsertion(T* obj);
 
-  T Normalization(T obj);
-  T FirstNorm(T obj);
-  T SecondNorm(T obj);
-  T InfinityNorm(T obj);
-  T HelderNorm(T obj);
+  virtual T Normalization(T obj);
+  virtual T FirstNorm(T obj);
+  virtual T SecondNorm(T obj);
+  virtual T InfinityNorm(T obj);
+  virtual T HelderNorm(T obj);
 
-  TVectorIterator<T> begin();
-  TVectorIterator<T> end();
+  virtual TVectorIterator<T> begin();
+  virtual TVectorIterator<T> end();
+
+  virtual void Rand();
 };
 
 
@@ -223,30 +226,30 @@ inline T TVector<T>::operator*(const TVector<T>& obj)
 
   T res = 0;
   for (int i = 0; i < len; i++)
-    res += (*this)[i] * obj[i];
+    res = res + (*this)[i] * obj[i];
 
   return res;
 }
 
 template<class T>
-inline TVector<T> TVector<T>::operator*(const T mul)
+inline TVector<T> TVector<T>::operator*(const T& mul)
 {
   TVector<T> res = len;
   for (int i = 0; i < len; i++)
-    res[i] *= mul;
+    res[i] = res[i] * mul;
 
   return res;
 }
 
-template<class T>
-inline TVector<T> TVector<T>::operator/(const T div)
-{
-  TVector<T> res = len;
-  for (int i = 0; i < len; i++)
-    res[i] /= div;
-
-  return res;
-}
+//template<class T>
+//inline TVector<T> TVector<T>::operator/(const T& div)
+//{
+//  TVector<T> res = len;
+//  for (int i = 0; i < len; i++)
+//    res[i] = res[i] / div;
+//
+//  return res;
+//}
 
 template<class T>
 inline TVector<T>& TVector<T>::operator=
@@ -355,6 +358,13 @@ template<class T>
 inline TVectorIterator<T> TVector<T>::end()
 {
   return TVectorIterator<T>(*this, len);
+}
+
+template<class T>
+inline void TVector<T>::Rand()
+{
+  for (int i = 0; i < len; i++)
+    vector[i] = rand();
 }
 
 template<class O>

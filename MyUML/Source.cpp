@@ -1,6 +1,6 @@
-#include "MyPoint.h"
+//#include "MyPoint.h"
 
-#include "Header.h"
+//#include "Header.h"
 
 //TPoint<int, 2>* Init()
 //{

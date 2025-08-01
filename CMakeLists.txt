@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0) #Проверка версии CMake.
+cmake_minimum_required(VERSION 3.31) #Проверка версии CMake.
 
 set(PROJECT_NAME VectorLibTest) #Создаем обычную локальную переменную с именем проекта
 project(${PROJECT_NAME}) # Название проекта

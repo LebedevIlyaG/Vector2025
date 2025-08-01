@@ -17,14 +17,14 @@ TEST(TVector, can_get_height)
 TEST(TVector, new_vector_is_set_to_zero)
 {
   TVector<int> bf(10);
-
+  bf[1] = 1;
   int sum = 0;
   for (int i = 0; i < bf.GetLen(); i++)
   {
     sum += bf[i];
   }
 
-  EXPECT_EQ(0, sum);
+  EXPECT_EQ(1, sum);
 }
 
 TEST(TVector, can_set_number_of_vector)

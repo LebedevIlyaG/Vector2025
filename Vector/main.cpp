@@ -6,9 +6,9 @@
 
 int main()
 {
-  //TVector<int> A, B;
-  //TVector<int> C = A;
-  //std::cout<< "A = \n" << A << "\n\n" << "B = \n" << B << "\n\nC = \n" << C << std::endl;
+  TVector<int> A, B;
+  TVector<int> C = A;
+  std::cout<< "A = \n" << A << "\n\n" << "B = \n" << B << "\n\nC = \n" << C << std::endl;
 
   //int n = 20;
   //int* mas = new int[n];
@@ -39,21 +39,21 @@ int main()
   //for (auto k : D)
   //  std::cout << k << std::endl;
 
-  TMatrix<int> A;
-  TMatrix<int> B(10);
-  TMatrix<int> C(10, 10);
-  int bl = B.GetLen();
-  B.Rand();
-  C.Rand();
+  //TMatrix<int> A;
+  //TMatrix<int> B(10);
+  //TMatrix<int> C(10, 10);
+  //int bl = B.GetLen();
+  //B.Rand();
+  //C.Rand();
 
-  try
-  {
-    std::cout << B << std::endl;
-  }
-  catch (ErrorClass a)
-  {
-    std::cout << a.str << std::endl;
-  }
+  //try
+  //{
+  //  std::cout << B << std::endl;
+  //}
+  //catch (ErrorClass a)
+  //{
+  //  std::cout << a.str << std::endl;
+  //}
 
   return 0;
 }

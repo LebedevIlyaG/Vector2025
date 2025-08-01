@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1) #Проверка версии CMake.
+cmake_minimum_required(VERSION 4.0) #Проверка версии CMake.
 
 set(PROJECT_NAME VectorLibTest) #Создаем обычную локальную переменную с именем проекта
 project(${PROJECT_NAME}) # Название проекта
@@ -26,7 +26,7 @@ add_subdirectory(Vector) #Добавляем директорию с под-CMak
 add_subdirectory(VectorLib)
 add_subdirectory(MyUML)
 add_subdirectory(ProjectUML)
-add_subdirectory(gtest)
+add_subdirectory(third_party/gtest)
 add_subdirectory(test)
 
 

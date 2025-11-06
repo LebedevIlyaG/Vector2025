@@ -1,14 +1,16 @@
-#include "Header.h"
-
-
-#include <direct.h>
-#include <windows.h>
-
-
-typedef TPoint<int, 2>* Init_t();
+//#include "Header.h"
+//
+//
+//#include <direct.h>
+//#include <windows.h>
+//
+//
+//typedef TPoint<int, 2>* Init_t();
 
 int main()
 {
+  return 0;
+}/*
   HINSTANCE mLibHandle;
 
 
@@ -42,4 +44,4 @@ int main()
   std::cout << *B << std::endl;
 
   return 0;
-}
+}*/

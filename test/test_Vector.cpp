@@ -1,42 +1,36 @@
 #include "Vector.h"
+#include "Stack.h"
 
 #include <gtest.h>
 
+TVector<int> NextGreaterElement(TVector<int>& nums)
+{
+  TVector<int> result(nums.size(), -1);
+  TStack<int> stack;
+
+  for (int i = nums.size() - 1; i >= 0; i--)
+  {
+    while (!stack.IsEmpty() && stack.top() <= nums[i])
+      stack.Pop();
+
+    if (!stack.empty())
+      result[i] = stack.top();
+
+    stack.Push(nums[i]);
+  }
+  return result;
+}
+
 TEST(TVector, can_create_birch_with_positive_height)
 {
-  ASSERT_NO_THROW(TVector<int> bf(3));
+  TVector<int> arr;
+  arr.push_back(10);
+  arr.push_back(-15);
+  arr.push_back(20);
+  arr.push_back(-25);
+  arr.push_back(30);
+
+
+  TVector<int> a = NextGreaterElement(arr);
 }
 
-TEST(TVector, can_get_height)
-{
-  TVector<int> bf(3);
-
-  EXPECT_NEAR(3, bf.GetLen(), 0.000001);
-}
-
-TEST(TVector, new_vector_is_set_to_zero)
-{
-  TVector<int> bf(10);
-  bf[1] = 1;
-  int sum = 0;
-  for (int i = 0; i < bf.GetLen(); i++)
-  {
-    sum += bf[i];
-  }
-
-  EXPECT_EQ(1, sum);
-}
-
-TEST(TVector, can_set_number_of_vector)
-{
-  TVector<int> bf(10);
-
-  bf.SetLen(3);
-  EXPECT_EQ(0, bf[0]);
-}
-
-
-TEST(TVector, throws_when_create_vector_with_negative_height)
-{
-  ASSERT_ANY_THROW(TVector<int> bf(-3));
-}

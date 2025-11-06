@@ -1,7 +1,14 @@
+#include <string>
+using namespace std;
+
+
 #include <iostream>
 #include "Vector.h"
-#include "Matrix.h"
-
+#include "Vector.h"
+#include "Stack.h"
+#include <sstream>
+#include <string>
+#include <iostream>
 #include <vector>
 
 int main()

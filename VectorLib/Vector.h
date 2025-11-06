@@ -15,25 +15,44 @@ protected:
 public:
   TVector();
   TVector(int len_);
+  TVector(int len_, T val);
   TVector(const TVector& obj);
   TVector(TVector&& obj);
   ~TVector();
 
-  virtual int GetLen();
-  virtual void GetVector(T** vector_);
+  void resize(int nn);
+     
+  int GetLen();
+  int size()
+  {
+    return GetLen();
+  }
+  void GetVector(T** vector_);
 
-  virtual void SetLen(int len_);
-  virtual void SetVector(T* vector_, int len_);
+  void SetLen(int len_);
+  void SetVector(T* vector_, int len_);
 
-  virtual TVector operator+(const TVector<T>& obj);
-  virtual TVector operator-(const TVector<T>& obj);
-  virtual T operator*(const TVector<T>& obj);
-  virtual TVector operator*(const T& mul);
-  //virtual TVector operator/(const T& div);
+  bool Empty()
+  {
+    if (len == 0)
+      return true;
+    return false;
+  }
 
-  virtual TVector& operator=(const TVector<T>& obj);
-  virtual TVector& operator=(TVector<T>&& obj);
-  virtual bool operator==(const TVector<T>& obj);
+  T* GetData()
+  {
+    return vector;
+  }
+
+  TVector operator+(const TVector<T>& obj);
+  TVector operator-(const TVector<T>& obj);
+  T operator*(const TVector<T>& obj);
+  TVector operator*(const T mul);
+  TVector operator/(const T div);
+
+  TVector& operator=(const TVector<T>& obj);
+  TVector& operator=(TVector<T>&& obj);
+  bool operator==(const TVector<T>& obj);
 
   virtual T& operator[](int index) const;
 
@@ -56,8 +75,15 @@ public:
   virtual TVectorIterator<T> end();
 
   virtual void Rand();
-};
 
+
+  void push_back(T obj);
+  void PushBack(T obj)
+  {
+    push_back(obj);
+  }
+
+};
 
 template<class T>
 class TVectorIterator
@@ -97,6 +123,25 @@ inline TVector<T>::TVector(int len_)
     len = len_;
 
   vector = new T[len]{ 0 };
+  isNew = true;
+
+}
+
+template<class T>
+inline TVector<T>::TVector(int len_, T val)
+{
+  if (len_ < 0)
+    throw(0);
+  else if (len_ == 0)
+  {
+    len = 0;
+    vector = nullptr;
+    return;
+  }
+  else
+    len = len_;
+
+  vector = new T[len]{ val };
   isNew = true;
 
 }
@@ -206,6 +251,26 @@ inline TVector<T> TVector<T>::operator+
 }
 
 template<class T>
+void TVector<T>::resize(int nn)
+{
+  T* nv = new T[nn];
+  for (int i = 0; i < len; i++)
+    nv[i] = vector[i];
+
+  delete[] vector;
+  vector = nv;
+  len = nn;
+}
+
+template<class T>
+void TVector<T>::push_back(T obj)
+{
+  resize(len + 1);
+
+  vector[len - 1] = obj;
+}
+
+template<class T>
 inline TVector<T> TVector<T>::operator-(const TVector<T>& obj)
 {
   if (len != obj.len)
@@ -231,15 +296,15 @@ inline T TVector<T>::operator*(const TVector<T>& obj)
   return res;
 }
 
-template<class T>
-inline TVector<T> TVector<T>::operator*(const T& mul)
-{
-  TVector<T> res = len;
-  for (int i = 0; i < len; i++)
-    res[i] = res[i] * mul;
-
-  return res;
-}
+//template<class T>
+//inline TVector<T> TVector<T>::operator*(const T& mul)
+//{
+//  TVector<T> res = len;
+//  for (int i = 0; i < len; i++)
+//    res[i] = res[i] * mul;
+//
+//  return res;
+//}
 
 //template<class T>
 //inline TVector<T> TVector<T>::operator/(const T& div)
